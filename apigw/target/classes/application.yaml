@@ -1,0 +1,25 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: location-service
+          uri: lb://LOCATION-SERVICE
+          predicates:
+            - Path=/api/locations/**
+        - id: forecast-service
+          uri: lb://FORECAST-SERVICE
+          predicates:
+            - Path=/api/forecasts/**
+  zipkin:
+    base-url: http://localhost:9411
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
